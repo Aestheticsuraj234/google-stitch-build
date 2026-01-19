@@ -6,7 +6,8 @@ import { redirect } from '@tanstack/react-router'
 
 const PUBLIC_PATHS = [
 "/login",
-"/api/auth"
+"/api/auth",
+"/api/inngest"
 ]
 
 
