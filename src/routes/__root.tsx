@@ -7,6 +7,7 @@ import Header from '../components/Header'
 import appCss from '../styles.css?url'
 import { ThemeProvider } from '@/provider/theme-provider'
 import QueryClientProvider from '@/provider/query-client-provider'
+import { Toaster } from '@/components/ui/sonner'
 
 export const Route = createRootRoute({
   head: () => ({
@@ -42,8 +43,9 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <body>
         <ThemeProvider>
           <QueryClientProvider>
-            <Header />
+           
             {children}
+            <Toaster/>
             <TanStackDevtools
               config={{
                 position: 'bottom-right',
