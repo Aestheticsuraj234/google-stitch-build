@@ -1,4 +1,5 @@
 import { prisma } from '@/db'
+import { inngest } from '@/inngest'
 import { authFnMiddleware } from '@/middleware/auth'
 import { createServerFn } from '@tanstack/react-start'
 
@@ -47,7 +48,7 @@ type CreateMockupResult = {
 export const createMockup = createServerFn({ method: 'POST' })
   .middleware([authFnMiddleware])
   .inputValidator((data: CreateMockupInput) => data)
-  .handler(async ({ data, context }):Promise<CreateMockupResult> => {
+  .handler(async ({ data, context }): Promise<CreateMockupResult> => {
     try {
       const userId = context.session.user.id
 
@@ -82,53 +83,61 @@ export const createMockup = createServerFn({ method: 'POST' })
         },
       })
 
-    //   TODO: IMPLEMENT INNGEST JOB
+      await inngest.send({
+        name: 'mockup/generation.requested',
+        data: {
+          mockupId: mockup.id,
+          projectId: project.id,
+          userId,
+          prompt,
+          deviceType,
+          uiLibrary,
+          aiModel,
+        },
+      })
 
-    return {
-         success:true,
-        mockupId:mockup.id,
-        projectId:project.id
-    }
+      return {
+        success: true,
+        mockupId: mockup.id,
+        projectId: project.id,
+      }
     } catch (error) {
-         console.error("Error creating mockup:", error);
+      console.error('Error creating mockup:', error)
       return {
         success: false,
-        error: error instanceof Error ? error.message : "Failed to create mockup",
-      };
+        error:
+          error instanceof Error ? error.message : 'Failed to create mockup',
+      }
     }
   })
 
+export const getUserMockups = createServerFn({ method: 'GET' })
+  .middleware([authFnMiddleware])
+  .handler(async ({ context }) => {
+    const userId = context.session.user.id
 
-export const getUserMockups = createServerFn({method:"GET"})
-.middleware([authFnMiddleware])
-.handler(
-    async({context})=>{
-        const userId = context.session.user.id
-
-      if (!userId) {
-        return []
-      }
-
-
-      const mockups = await prisma.mockup.findMany({
-        where:{
-            project:{
-                userId:userId
-            }
-        },
-        include:{
-            project:{
-                select:{
-                    id:true,
-                    name:true
-                }
-            }
-        },
-        orderBy:{
-            createdAt:"desc"
-        }
-      })
-
-      return mockups as MockupWithProject[]
+    if (!userId) {
+      return []
     }
-)
+
+    const mockups = await prisma.mockup.findMany({
+      where: {
+        project: {
+          userId: userId,
+        },
+      },
+      include: {
+        project: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    })
+
+    return mockups as MockupWithProject[]
+  })

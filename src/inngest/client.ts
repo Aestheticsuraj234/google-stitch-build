@@ -1,4 +1,5 @@
 import {Inngest} from "inngest";
+import { schemas } from "./types";
 
 
-export const inngest = new Inngest({id:'sketch-ai'});
+export const inngest = new Inngest({id:'sketch-ai' , schemas:schemas});
