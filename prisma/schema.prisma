@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
@@ -24,6 +23,7 @@ model User {
   updatedAt     DateTime  @updatedAt
   sessions      Session[]
   accounts      Account[]
+  projects      Project[]
 
   @@unique([email])
   @@map("user")
@@ -75,4 +75,76 @@ model Verification {
 
   @@index([identifier])
   @@map("verification")
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  mockup      Mockup[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@map("project")
+}
+
+model Mockup {
+  id         String       @id @default(cuid())
+  name       String
+  prompt     String
+  code       String
+  deviceType DeviceType   @default(DESKTOP)
+  uiLibrary  UILibrary    @default(SHADCN)
+  status     MockupStatus @default(PENDING)
+
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  versions  MockupVersion[]
+
+   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([projectId])
+  @@map("mockup")
+}
+
+model MockupVersion{
+  id  String @id @default(cuid())
+  version Int
+  code String @db.Text
+  prompt  String? @db.Text
+  mockupId String
+  mockup  Mockup  @relation(fields: [mockupId] , references: [id] , onDelete: Cascade)
+   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([mockupId, version])
+  @@index([mockupId])
+  @@map("mockup_version")
+}
+
+enum DeviceType {
+  DESKTOP
+  MOBILE
+  TABLET
+  BOTH
+}
+
+enum UILibrary {
+  SHADCN
+  MATERIAL_UI
+  ANT_DESIGN
+  ACETERNITY
+}
+
+enum MockupStatus {
+  PENDING
+  GENERATING
+  COMPLETED
+  FAILED
 }

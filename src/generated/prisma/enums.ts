@@ -9,7 +9,31 @@
 * 🟢 You can import this file directly.
 */
 
+export const DeviceType = {
+  DESKTOP: 'DESKTOP',
+  MOBILE: 'MOBILE',
+  TABLET: 'TABLET',
+  BOTH: 'BOTH'
+} as const
+
+export type DeviceType = (typeof DeviceType)[keyof typeof DeviceType]
 
 
-// This file is empty because there are no enums in the schema.
-export {}
+export const UILibrary = {
+  SHADCN: 'SHADCN',
+  MATERIAL_UI: 'MATERIAL_UI',
+  ANT_DESIGN: 'ANT_DESIGN',
+  ACETERNITY: 'ACETERNITY'
+} as const
+
+export type UILibrary = (typeof UILibrary)[keyof typeof UILibrary]
+
+
+export const MockupStatus = {
+  PENDING: 'PENDING',
+  GENERATING: 'GENERATING',
+  COMPLETED: 'COMPLETED',
+  FAILED: 'FAILED'
+} as const
+
+export type MockupStatus = (typeof MockupStatus)[keyof typeof MockupStatus]

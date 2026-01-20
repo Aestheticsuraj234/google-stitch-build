@@ -32,6 +32,8 @@ import {
 import { cn } from '@/lib/utils'
 import { toast } from 'sonner'
 import { Spinner } from '../ui/spinner'
+import { createMockup } from '@/server/mockup'
+import { mockupsQueryKey } from './mockup-list'
 
 export type DeviceType = 'DESKTOP' | 'MOBILE' | 'TABLET' | 'BOTH'
 export type UILibrary = 'SHADCN' | 'MATERIAL_UI' | 'ANT_DESIGN' | 'ACETERNITY'
@@ -148,7 +150,52 @@ const PromptInput = () => {
   const selectedLibrary = uiLibraryOptions.find((l) => l.id === uiLibrary)!
   const selectedModel = aiModelOptions.find((m) => m.id === aiModel)!
 
-  const handleSubmit = ()=>{}
+  const handleSubmit = async()=>{
+    try {
+      setIsLoading(true);
+      const result = await createMockup({
+        data:{
+          prompt:prompt.trim(),
+          deviceType,
+          uiLibrary,
+          aiModel
+        }
+      })
+
+      if(result.success && result.mockupId){
+        await queryClient.invalidateQueries({queryKey:mockupsQueryKey})
+        toast.success("Mockup creation started" , {
+          description:'Redirecting to playground'
+        })
+
+        navigate({
+          to:"/playground/$playgroundId",
+          params:{playgroundId:result.mockupId}
+        })
+      }
+      else{
+        toast.error("Failed to create mockup")
+      }
+    } catch (error) {
+      console.error('Error creating mockup:', error)
+      toast.error('Failed to create mockup', {
+        description:
+          error instanceof Error
+            ? error.message
+            : 'An unexpected error occurred',
+      })
+    }
+    finally{
+      setIsLoading(false)
+    }
+  }
+
+  const handleKeyDown = (e:React.KeyboardEvent<HTMLTextAreaElement>)=>{
+    if(e.key === "Enter" && !e.shiftKey){
+      e.preventDefault();
+      handleSubmit()
+    }
+  }
 
   return (
     <div className="w-full max-w-2xl">
@@ -173,7 +220,7 @@ const PromptInput = () => {
         <textarea
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
-          //   onKeyDown={handleKeyDown}
+            onKeyDown={handleKeyDown}
           placeholder="Describe the UI you want to create..."
           rows={1}
           disabled={isLoading}

@@ -1,6 +1,7 @@
 import Header from '@/components/Header'
 import { BackgroundPattern } from '@/components/home/background-pattern'
 import { LoginPrompt } from '@/components/home/login-prompt'
+import { MokcupList } from '@/components/home/mockup-list'
 import PromptInput from '@/components/home/prompt-input'
 import { QuickActions } from '@/components/home/quick-actions'
 import { authClient } from '@/lib/auth-client'
@@ -36,6 +37,8 @@ function App() {
             <LoginPrompt/>
           )
         }
+
+        {isAuthenticated && <MokcupList/>}
     </main>
    </div>
   )

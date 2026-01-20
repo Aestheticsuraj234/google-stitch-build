@@ -175,6 +175,57 @@ export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedDateTimeNullableFilter<$PrismaModel>
 }
 
+export type EnumDeviceTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.DeviceType | Prisma.EnumDeviceTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.DeviceType[] | Prisma.ListEnumDeviceTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DeviceType[] | Prisma.ListEnumDeviceTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDeviceTypeFilter<$PrismaModel> | $Enums.DeviceType
+}
+
+export type EnumUILibraryFilter<$PrismaModel = never> = {
+  equals?: $Enums.UILibrary | Prisma.EnumUILibraryFieldRefInput<$PrismaModel>
+  in?: $Enums.UILibrary[] | Prisma.ListEnumUILibraryFieldRefInput<$PrismaModel>
+  notIn?: $Enums.UILibrary[] | Prisma.ListEnumUILibraryFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumUILibraryFilter<$PrismaModel> | $Enums.UILibrary
+}
+
+export type EnumMockupStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.MockupStatus | Prisma.EnumMockupStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.MockupStatus[] | Prisma.ListEnumMockupStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.MockupStatus[] | Prisma.ListEnumMockupStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumMockupStatusFilter<$PrismaModel> | $Enums.MockupStatus
+}
+
+export type EnumDeviceTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DeviceType | Prisma.EnumDeviceTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.DeviceType[] | Prisma.ListEnumDeviceTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DeviceType[] | Prisma.ListEnumDeviceTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDeviceTypeWithAggregatesFilter<$PrismaModel> | $Enums.DeviceType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDeviceTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDeviceTypeFilter<$PrismaModel>
+}
+
+export type EnumUILibraryWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.UILibrary | Prisma.EnumUILibraryFieldRefInput<$PrismaModel>
+  in?: $Enums.UILibrary[] | Prisma.ListEnumUILibraryFieldRefInput<$PrismaModel>
+  notIn?: $Enums.UILibrary[] | Prisma.ListEnumUILibraryFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumUILibraryWithAggregatesFilter<$PrismaModel> | $Enums.UILibrary
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumUILibraryFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumUILibraryFilter<$PrismaModel>
+}
+
+export type EnumMockupStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.MockupStatus | Prisma.EnumMockupStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.MockupStatus[] | Prisma.ListEnumMockupStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.MockupStatus[] | Prisma.ListEnumMockupStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumMockupStatusWithAggregatesFilter<$PrismaModel> | $Enums.MockupStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumMockupStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumMockupStatusFilter<$PrismaModel>
+}
+
 export type NestedIntFilter<$PrismaModel = never> = {
   equals?: number | Prisma.IntFieldRefInput<$PrismaModel>
   in?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel>
@@ -347,6 +398,57 @@ export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedDateTimeNullableFilter<$PrismaModel>
   _max?: Prisma.NestedDateTimeNullableFilter<$PrismaModel>
+}
+
+export type NestedEnumDeviceTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.DeviceType | Prisma.EnumDeviceTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.DeviceType[] | Prisma.ListEnumDeviceTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DeviceType[] | Prisma.ListEnumDeviceTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDeviceTypeFilter<$PrismaModel> | $Enums.DeviceType
+}
+
+export type NestedEnumUILibraryFilter<$PrismaModel = never> = {
+  equals?: $Enums.UILibrary | Prisma.EnumUILibraryFieldRefInput<$PrismaModel>
+  in?: $Enums.UILibrary[] | Prisma.ListEnumUILibraryFieldRefInput<$PrismaModel>
+  notIn?: $Enums.UILibrary[] | Prisma.ListEnumUILibraryFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumUILibraryFilter<$PrismaModel> | $Enums.UILibrary
+}
+
+export type NestedEnumMockupStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.MockupStatus | Prisma.EnumMockupStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.MockupStatus[] | Prisma.ListEnumMockupStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.MockupStatus[] | Prisma.ListEnumMockupStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumMockupStatusFilter<$PrismaModel> | $Enums.MockupStatus
+}
+
+export type NestedEnumDeviceTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DeviceType | Prisma.EnumDeviceTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.DeviceType[] | Prisma.ListEnumDeviceTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DeviceType[] | Prisma.ListEnumDeviceTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDeviceTypeWithAggregatesFilter<$PrismaModel> | $Enums.DeviceType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDeviceTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDeviceTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumUILibraryWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.UILibrary | Prisma.EnumUILibraryFieldRefInput<$PrismaModel>
+  in?: $Enums.UILibrary[] | Prisma.ListEnumUILibraryFieldRefInput<$PrismaModel>
+  notIn?: $Enums.UILibrary[] | Prisma.ListEnumUILibraryFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumUILibraryWithAggregatesFilter<$PrismaModel> | $Enums.UILibrary
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumUILibraryFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumUILibraryFilter<$PrismaModel>
+}
+
+export type NestedEnumMockupStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.MockupStatus | Prisma.EnumMockupStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.MockupStatus[] | Prisma.ListEnumMockupStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.MockupStatus[] | Prisma.ListEnumMockupStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumMockupStatusWithAggregatesFilter<$PrismaModel> | $Enums.MockupStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumMockupStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumMockupStatusFilter<$PrismaModel>
 }
 
 

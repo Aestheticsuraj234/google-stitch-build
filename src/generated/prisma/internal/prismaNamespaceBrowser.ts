@@ -55,7 +55,10 @@ export const ModelName = {
   User: 'User',
   Session: 'Session',
   Account: 'Account',
-  Verification: 'Verification'
+  Verification: 'Verification',
+  Project: 'Project',
+  Mockup: 'Mockup',
+  MockupVersion: 'MockupVersion'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -139,6 +142,47 @@ export const VerificationScalarFieldEnum = {
 } as const
 
 export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
+
+
+export const ProjectScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProjectScalarFieldEnum = (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum]
+
+
+export const MockupScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  prompt: 'prompt',
+  code: 'code',
+  deviceType: 'deviceType',
+  uiLibrary: 'uiLibrary',
+  status: 'status',
+  projectId: 'projectId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MockupScalarFieldEnum = (typeof MockupScalarFieldEnum)[keyof typeof MockupScalarFieldEnum]
+
+
+export const MockupVersionScalarFieldEnum = {
+  id: 'id',
+  version: 'version',
+  code: 'code',
+  prompt: 'prompt',
+  mockupId: 'mockupId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MockupVersionScalarFieldEnum = (typeof MockupVersionScalarFieldEnum)[keyof typeof MockupVersionScalarFieldEnum]
 
 
 export const SortOrder = {

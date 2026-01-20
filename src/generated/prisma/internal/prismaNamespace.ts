@@ -388,7 +388,10 @@ export const ModelName = {
   User: 'User',
   Session: 'Session',
   Account: 'Account',
-  Verification: 'Verification'
+  Verification: 'Verification',
+  Project: 'Project',
+  Mockup: 'Mockup',
+  MockupVersion: 'MockupVersion'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -404,7 +407,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "todo" | "user" | "session" | "account" | "verification"
+    modelProps: "todo" | "user" | "session" | "account" | "verification" | "project" | "mockup" | "mockupVersion"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -778,6 +781,228 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Project: {
+      payload: Prisma.$ProjectPayload<ExtArgs>
+      fields: Prisma.ProjectFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ProjectFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ProjectFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectPayload>
+        }
+        findFirst: {
+          args: Prisma.ProjectFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ProjectFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectPayload>
+        }
+        findMany: {
+          args: Prisma.ProjectFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectPayload>[]
+        }
+        create: {
+          args: Prisma.ProjectCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectPayload>
+        }
+        createMany: {
+          args: Prisma.ProjectCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ProjectCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectPayload>[]
+        }
+        delete: {
+          args: Prisma.ProjectDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectPayload>
+        }
+        update: {
+          args: Prisma.ProjectUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectPayload>
+        }
+        deleteMany: {
+          args: Prisma.ProjectDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ProjectUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ProjectUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectPayload>[]
+        }
+        upsert: {
+          args: Prisma.ProjectUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectPayload>
+        }
+        aggregate: {
+          args: Prisma.ProjectAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateProject>
+        }
+        groupBy: {
+          args: Prisma.ProjectGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProjectGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ProjectCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProjectCountAggregateOutputType> | number
+        }
+      }
+    }
+    Mockup: {
+      payload: Prisma.$MockupPayload<ExtArgs>
+      fields: Prisma.MockupFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MockupFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MockupPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MockupFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MockupPayload>
+        }
+        findFirst: {
+          args: Prisma.MockupFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MockupPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MockupFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MockupPayload>
+        }
+        findMany: {
+          args: Prisma.MockupFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MockupPayload>[]
+        }
+        create: {
+          args: Prisma.MockupCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MockupPayload>
+        }
+        createMany: {
+          args: Prisma.MockupCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.MockupCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MockupPayload>[]
+        }
+        delete: {
+          args: Prisma.MockupDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MockupPayload>
+        }
+        update: {
+          args: Prisma.MockupUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MockupPayload>
+        }
+        deleteMany: {
+          args: Prisma.MockupDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MockupUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.MockupUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MockupPayload>[]
+        }
+        upsert: {
+          args: Prisma.MockupUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MockupPayload>
+        }
+        aggregate: {
+          args: Prisma.MockupAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMockup>
+        }
+        groupBy: {
+          args: Prisma.MockupGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MockupGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MockupCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MockupCountAggregateOutputType> | number
+        }
+      }
+    }
+    MockupVersion: {
+      payload: Prisma.$MockupVersionPayload<ExtArgs>
+      fields: Prisma.MockupVersionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MockupVersionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MockupVersionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MockupVersionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MockupVersionPayload>
+        }
+        findFirst: {
+          args: Prisma.MockupVersionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MockupVersionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MockupVersionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MockupVersionPayload>
+        }
+        findMany: {
+          args: Prisma.MockupVersionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MockupVersionPayload>[]
+        }
+        create: {
+          args: Prisma.MockupVersionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MockupVersionPayload>
+        }
+        createMany: {
+          args: Prisma.MockupVersionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.MockupVersionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MockupVersionPayload>[]
+        }
+        delete: {
+          args: Prisma.MockupVersionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MockupVersionPayload>
+        }
+        update: {
+          args: Prisma.MockupVersionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MockupVersionPayload>
+        }
+        deleteMany: {
+          args: Prisma.MockupVersionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MockupVersionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.MockupVersionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MockupVersionPayload>[]
+        }
+        upsert: {
+          args: Prisma.MockupVersionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MockupVersionPayload>
+        }
+        aggregate: {
+          args: Prisma.MockupVersionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMockupVersion>
+        }
+        groupBy: {
+          args: Prisma.MockupVersionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MockupVersionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MockupVersionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MockupVersionCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -884,6 +1109,47 @@ export const VerificationScalarFieldEnum = {
 export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
 
 
+export const ProjectScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProjectScalarFieldEnum = (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum]
+
+
+export const MockupScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  prompt: 'prompt',
+  code: 'code',
+  deviceType: 'deviceType',
+  uiLibrary: 'uiLibrary',
+  status: 'status',
+  projectId: 'projectId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MockupScalarFieldEnum = (typeof MockupScalarFieldEnum)[keyof typeof MockupScalarFieldEnum]
+
+
+export const MockupVersionScalarFieldEnum = {
+  id: 'id',
+  version: 'version',
+  code: 'code',
+  prompt: 'prompt',
+  mockupId: 'mockupId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MockupVersionScalarFieldEnum = (typeof MockupVersionScalarFieldEnum)[keyof typeof MockupVersionScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -960,6 +1226,48 @@ export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
  * Reference to a field of type 'Boolean'
  */
 export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
+ * Reference to a field of type 'DeviceType'
+ */
+export type EnumDeviceTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DeviceType'>
+    
+
+
+/**
+ * Reference to a field of type 'DeviceType[]'
+ */
+export type ListEnumDeviceTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DeviceType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'UILibrary'
+ */
+export type EnumUILibraryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UILibrary'>
+    
+
+
+/**
+ * Reference to a field of type 'UILibrary[]'
+ */
+export type ListEnumUILibraryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UILibrary[]'>
+    
+
+
+/**
+ * Reference to a field of type 'MockupStatus'
+ */
+export type EnumMockupStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MockupStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'MockupStatus[]'
+ */
+export type ListEnumMockupStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MockupStatus[]'>
     
 
 
@@ -1076,6 +1384,9 @@ export type GlobalOmitConfig = {
   session?: Prisma.SessionOmit
   account?: Prisma.AccountOmit
   verification?: Prisma.VerificationOmit
+  project?: Prisma.ProjectOmit
+  mockup?: Prisma.MockupOmit
+  mockupVersion?: Prisma.MockupVersionOmit
 }
 
 /* Types for Logging */
