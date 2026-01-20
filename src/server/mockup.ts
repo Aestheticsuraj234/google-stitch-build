@@ -141,3 +141,54 @@ export const getUserMockups = createServerFn({ method: 'GET' })
 
     return mockups as MockupWithProject[]
   })
+
+
+export const getMockupWithVariations = createServerFn({method:"GET"})
+.middleware([authFnMiddleware])
+.inputValidator((data:string)=>data)
+.handler(
+  async({data:mockupId , context})=>{
+    try {
+      const userId = context.session.user.id;
+
+      if (!userId){
+        return null
+      }
+
+      const mockup = await prisma.mockup.findFirst({
+        where:{
+          id:mockupId,
+          project:{
+            userId:userId
+          },
+        },
+        include:{
+          versions:{
+            orderBy:{
+              version:"asc"
+            },
+            select:{
+              id:true,
+              version:true,
+              code:true,
+              prompt:true,
+              createdAt:true
+            }
+          }
+        }
+      })
+
+      if(!mockup){
+        return null
+      }
+
+      return {
+        ...mockup,
+        varitions:mockup.versions
+      }
+    } catch (error) {
+       console.error("Error fetching mockup with variations:", error);
+      return null;
+    }
+  }
+)
