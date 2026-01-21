@@ -18,13 +18,13 @@ const upgradeSearchSchema = z.object({
 export const Route = createFileRoute('/upgrade')({
     validateSearch:(search)=>upgradeSearchSchema.parse(search),
   component: RouteComponent,
-  loaderDeps:({search:{success}})=>({success}),
-  loader:async({deps:{success}})=>{
+  loaderDeps:({search:{success , checkout_id}})=>({success , checkout_id}),
+  loader:async({deps:{success , checkout_id}})=>{
     let activationResult = null;
     const isSuccess = success === true || success === "true";
 
     if(isSuccess){
-        activationResult = await activateProSubscription();
+        activationResult = await activateProSubscription({data:checkout_id});
     }
 
     const credits = await getUserCredits()
