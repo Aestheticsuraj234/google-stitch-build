@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils'
-import { DeviceType } from '@/server/mockup'
+import { DeviceType, editVariation } from '@/server/mockup'
 import React, { useCallback, useMemo, useState } from 'react'
 import {
   ReactFlow,
@@ -16,6 +16,8 @@ import { MockupNode } from './mockup-node'
 import SelectionToolbar from './selection-toolbar'
 import CodeModal from './code-modal'
 import PreviewModal from './preview-modal'
+import { EditModal } from './edit-modal'
+import { toast } from 'sonner'
 
 export type Variation = {
   id: string
@@ -195,13 +197,48 @@ const Canvas = ({
     }
   }, [allVariations.length, FRAME_WIDTH, FRAME_HEIGHT, deviceType])
 
-  const handleEdit = () => {}
-  const handlePreview = (device:DeviceSize) =>{
+  const handleEdit = () => setEditOpen(true)
+  const handlePreview = (device: DeviceSize) => {
     setPreviewDevice(device)
     setPreviewOpen(true)
-  } 
+  }
   const handleViewCode = () => setCodeOpen(true)
   const handleExport = () => {}
+
+  const handleEditSubmit = async (prompt: string) => {
+    if (!selectedNode) return
+
+    if (mockupId) {
+      try {
+        const result = await editVariation({
+          data: {
+            versionId: selectedNode.id,
+            mockupId: mockupId,
+            editPrompt: prompt,
+            aiModel: 'sketch-pro', // Could be made configurable
+          },
+        })
+
+        if (result.success) {
+          toast.success('Edit started!', {
+            description:
+              'Your changes are being processed. The mockup will update automatically.',
+          })
+
+          if (onEditComplete) {
+            onEditComplete()
+          }
+        } else {
+          toast.error('Failed to start edit', {
+            description: result.error || 'Please try again.',
+          })
+        }
+      } catch (error) {}
+      toast.error('Failed to start edit', {
+        description: 'Please try again.',
+      })
+    }
+  }
 
   return (
     <div className="relative h-screen w-screen">
@@ -248,27 +285,31 @@ const Canvas = ({
         />
       </ReactFlow>
 
-      {
-        selectedNode && (
-          <>
-
+      {selectedNode && (
+        <>
           <PreviewModal
-           open={previewOpen}
+            open={previewOpen}
             onOpenChange={setPreviewOpen}
             html={selectedNode.html}
             initialDevice={previewDevice}
           />
 
           <CodeModal
-           open={codeOpen}
+            open={codeOpen}
             onOpenChange={setCodeOpen}
             html={selectedNode.html}
             title={`Code - ${selectedNode.label}`}
-          
           />
-          </>
-        )
-      }
+
+          <EditModal
+            open={editOpen}
+            onOpenChange={setEditOpen}
+            currentHtml={selectedNode.html}
+            variantLabel={selectedNode.label}
+            onSubmit={handleEditSubmit}
+          />
+        </>
+      )}
     </div>
   )
 }

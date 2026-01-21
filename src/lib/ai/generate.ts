@@ -1,6 +1,8 @@
 import { generateText } from 'ai'
 import { getAIModel, type AIModel } from './providers'
 import {
+  generateEditSystemPrompt,
+  generateEditUserPrompt,
   generateVariationsSystemPrompt,
   generateVariationsUserPrompt,
 } from './prompt'
@@ -101,6 +103,18 @@ function validateGeneratedCode(code: string): {
   return { valid: true }
 }
 
+function extractCodeFromResponse(response: string): string {
+  const codeBlockRegex = /```(?:html)?\n?([\s\S]*?)```/;
+  const match = response.match(codeBlockRegex);
+  
+  if (match && match[1]) {
+    return match[1].trim();
+  }
+  
+  return response.trim();
+}
+
+
 export async function generateUIVariations(
   input: GenerationInput,
 ): Promise<VariationsGenerationResult> {
@@ -154,4 +168,51 @@ export async function generateUIVariations(
       error: "An unexpected error occurred during generation",
     };
   }
+}
+
+export type EditInput = {
+  currentHtml: string;
+  editPrompt: string;
+  model: AIModel;
+};
+
+export async function editUICode(input:EditInput):Promise<GenerationResult> {
+    const {currentHtml , editPrompt , model} = input;
+
+    try {
+      const aiModel = getAIModel(model)
+       const systemPrompt = generateEditSystemPrompt();
+    const userPrompt = generateEditUserPrompt(currentHtml, editPrompt);
+
+    const result = await generateText({
+      model:aiModel,
+      system:systemPrompt,
+       prompt: userPrompt,
+      temperature: 0.5, // Lower temperature for more precise edits
+    })
+
+     const extractedCode = extractCodeFromResponse(result.text);
+    const  validation = validateGeneratedCode(extractedCode);
+
+      if (!validation.valid) {
+      return {
+        success: false,
+        error: `Edited code validation failed: ${validation.error}`,
+      };
+    }
+
+    return {
+      success: true,
+      code: extractedCode,
+      tokensUsed: result.usage?.totalTokens
+    }
+
+    } catch (error) {
+       console.error("AI edit error:", error);
+    
+    return {
+      success: false,
+      error: "An unexpected error occurred during editing",
+    };
+    }
 }

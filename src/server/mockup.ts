@@ -192,3 +192,80 @@ export const getMockupWithVariations = createServerFn({method:"GET"})
     }
   }
 )
+
+
+type EditVariationInput = {
+  versionId: string;
+  mockupId: string;
+  editPrompt: string;
+  aiModel: AIModel;
+};
+
+type EditVariationResult = {
+  success: boolean;
+  error?: string;
+};
+
+
+export const editVariation = createServerFn({method:"POST"})
+.middleware([authFnMiddleware])
+.inputValidator((data:EditVariationInput)=>data)
+.handler(
+  async({data , context})=>{
+    const userId = context.session.user.id;
+
+      if (!userId){
+        return {
+          success:false,
+          error: "Unauthorized. Please sign in.",
+        }
+      }
+
+      const {aiModel , editPrompt ,  mockupId , versionId} = data;
+
+      const mockup = await prisma.mockup.findFirst({
+        where:{
+          id:mockupId,
+          project:{
+            userId
+          }
+        }
+      })
+
+      if(!mockup){
+         return {
+          success: false,
+          error: "Mockup not found or unauthorized.",
+        };
+      }
+
+      const version = await prisma.mockupVersion.findUnique({
+        where:{id:versionId},
+        select:{code:true}
+      })
+      
+      
+       if (!version) {
+        return {
+          success: false,
+          error: "Version not found.",
+        };
+      }
+
+      await inngest.send({
+        name:"mockup/variation.edit.requested",
+        data:{
+           versionId,
+          mockupId,
+          currentHtml: version.code,
+          editPrompt,
+          aiModel,
+        }
+      })
+
+      return {
+        success:true
+      }
+
+  }
+)

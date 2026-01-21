@@ -115,7 +115,15 @@ function RouteComponent() {
   }
   ]
 
-  const handleEditComplete = ()=>{}
+  const handleEditComplete = ()=>{
+    const pollInterval = setInterval(async()=>{
+      await queryClient.invalidateQueries({queryKey:["mockup" , playgroundId]})
+    },2000)
+
+    setTimeout(()=>{
+      clearInterval(pollInterval)
+    },30000)
+  }
 
   return (
     <Canvas
