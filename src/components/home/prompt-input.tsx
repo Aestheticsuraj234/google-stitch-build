@@ -34,6 +34,7 @@ import { toast } from 'sonner'
 import { Spinner } from '../ui/spinner'
 import { createMockup } from '@/server/mockup'
 import { mockupsQueryKey } from './mockup-list'
+import { FREE_TIER_CREDITS, getUserCredits } from '@/server/credits'
 
 export type DeviceType = 'DESKTOP' | 'MOBILE' | 'TABLET' | 'BOTH'
 export type UILibrary = 'SHADCN' | 'MATERIAL_UI' | 'ANT_DESIGN' | 'ACETERNITY'
@@ -150,6 +151,15 @@ const PromptInput = () => {
   const selectedLibrary = uiLibraryOptions.find((l) => l.id === uiLibrary)!
   const selectedModel = aiModelOptions.find((m) => m.id === aiModel)!
 
+  const {data:credits} = useQuery({
+    queryKey:["user-credits"],
+    queryFn:()=>getUserCredits()
+  })
+
+  const isPro = credits?.plan === "pro";
+   const canGenerate = credits?.canGenerate ?? true
+  const creditsRemaining = credits?.creditsRemaining ?? FREE_TIER_CREDITS
+
   const handleSubmit = async()=>{
     try {
       setIsLoading(true);
@@ -164,6 +174,7 @@ const PromptInput = () => {
 
       if(result.success && result.mockupId){
         await queryClient.invalidateQueries({queryKey:mockupsQueryKey})
+        await queryClient.invalidateQueries({ queryKey: ["user-credits"] })
         toast.success("Mockup creation started" , {
           description:'Redirecting to playground'
         })
@@ -199,6 +210,46 @@ const PromptInput = () => {
 
   return (
     <div className="w-full max-w-2xl">
+
+      {credits && !isPro && (
+        <div className={cn(
+          "mb-3 flex items-center justify-between px-4 py-2.5 rounded-lg border text-sm",
+          !canGenerate 
+            ? "bg-red-500/10 border-red-500/20 text-red-600 dark:text-red-400"
+            : creditsRemaining <= 2
+            ? "bg-amber-500/10 border-amber-500/20 text-amber-600 dark:text-amber-400"
+            : "bg-zinc-100/80 dark:bg-zinc-900/50 border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400"
+        )}>
+          <div className="flex items-center gap-2">
+            {!canGenerate ? (
+              <AlertCircle className="w-4 h-4" />
+            ) : (
+              <Zap className="w-4 h-4" />
+            )}
+            <span>
+              {!canGenerate 
+                ? "You've used all your free generations this month" 
+                : `${creditsRemaining} generation${creditsRemaining === 1 ? '' : 's'} remaining this month`
+              }
+            </span>
+          </div>
+          <Link to="/upgrade">
+            <Button size="sm" variant={!canGenerate ? "default" : "ghost"} className={cn(
+              "h-7 text-xs",
+              !canGenerate && "bg-red-500 hover:bg-red-600 text-white"
+            )}>
+              <Crown className="w-3 h-3 mr-1" />
+              {!canGenerate ? "Upgrade Now" : "Get Pro"}
+            </Button>
+          </Link>
+        </div>
+      )}
+       {isPro && (
+        <div className="mb-3 flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-sm text-emerald-600 dark:text-emerald-400">
+          <Sparkles className="w-4 h-4" />
+          <span>Pro member — Unlimited generations</span>
+        </div>
+      )} 
 
     <div className='mb-3 flex flex-wrap gap-2'>
         {

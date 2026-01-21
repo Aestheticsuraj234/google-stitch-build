@@ -20,8 +20,18 @@ export type UserModel = runtime.Types.Result.DefaultSelection<Prisma.$UserPayloa
 
 export type AggregateUser = {
   _count: UserCountAggregateOutputType | null
+  _avg: UserAvgAggregateOutputType | null
+  _sum: UserSumAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
+}
+
+export type UserAvgAggregateOutputType = {
+  creditsUsed: number | null
+}
+
+export type UserSumAggregateOutputType = {
+  creditsUsed: number | null
 }
 
 export type UserMinAggregateOutputType = {
@@ -32,6 +42,12 @@ export type UserMinAggregateOutputType = {
   image: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  plan: string | null
+  creditsUsed: number | null
+  creditsResetAt: Date | null
+  polarCustomerId: string | null
+  subscriptionId: string | null
+  subscriptionStatus: string | null
 }
 
 export type UserMaxAggregateOutputType = {
@@ -42,6 +58,12 @@ export type UserMaxAggregateOutputType = {
   image: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  plan: string | null
+  creditsUsed: number | null
+  creditsResetAt: Date | null
+  polarCustomerId: string | null
+  subscriptionId: string | null
+  subscriptionStatus: string | null
 }
 
 export type UserCountAggregateOutputType = {
@@ -52,9 +74,23 @@ export type UserCountAggregateOutputType = {
   image: number
   createdAt: number
   updatedAt: number
+  plan: number
+  creditsUsed: number
+  creditsResetAt: number
+  polarCustomerId: number
+  subscriptionId: number
+  subscriptionStatus: number
   _all: number
 }
 
+
+export type UserAvgAggregateInputType = {
+  creditsUsed?: true
+}
+
+export type UserSumAggregateInputType = {
+  creditsUsed?: true
+}
 
 export type UserMinAggregateInputType = {
   id?: true
@@ -64,6 +100,12 @@ export type UserMinAggregateInputType = {
   image?: true
   createdAt?: true
   updatedAt?: true
+  plan?: true
+  creditsUsed?: true
+  creditsResetAt?: true
+  polarCustomerId?: true
+  subscriptionId?: true
+  subscriptionStatus?: true
 }
 
 export type UserMaxAggregateInputType = {
@@ -74,6 +116,12 @@ export type UserMaxAggregateInputType = {
   image?: true
   createdAt?: true
   updatedAt?: true
+  plan?: true
+  creditsUsed?: true
+  creditsResetAt?: true
+  polarCustomerId?: true
+  subscriptionId?: true
+  subscriptionStatus?: true
 }
 
 export type UserCountAggregateInputType = {
@@ -84,6 +132,12 @@ export type UserCountAggregateInputType = {
   image?: true
   createdAt?: true
   updatedAt?: true
+  plan?: true
+  creditsUsed?: true
+  creditsResetAt?: true
+  polarCustomerId?: true
+  subscriptionId?: true
+  subscriptionStatus?: true
   _all?: true
 }
 
@@ -125,6 +179,18 @@ export type UserAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: UserAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: UserSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: UserMinAggregateInputType
@@ -155,6 +221,8 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
   take?: number
   skip?: number
   _count?: UserCountAggregateInputType | true
+  _avg?: UserAvgAggregateInputType
+  _sum?: UserSumAggregateInputType
   _min?: UserMinAggregateInputType
   _max?: UserMaxAggregateInputType
 }
@@ -167,7 +235,15 @@ export type UserGroupByOutputType = {
   image: string | null
   createdAt: Date
   updatedAt: Date
+  plan: string
+  creditsUsed: number
+  creditsResetAt: Date
+  polarCustomerId: string | null
+  subscriptionId: string | null
+  subscriptionStatus: string | null
   _count: UserCountAggregateOutputType | null
+  _avg: UserAvgAggregateOutputType | null
+  _sum: UserSumAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
 }
@@ -198,6 +274,12 @@ export type UserWhereInput = {
   image?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  plan?: Prisma.StringFilter<"User"> | string
+  creditsUsed?: Prisma.IntFilter<"User"> | number
+  creditsResetAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  polarCustomerId?: Prisma.StringNullableFilter<"User"> | string | null
+  subscriptionId?: Prisma.StringNullableFilter<"User"> | string | null
+  subscriptionStatus?: Prisma.StringNullableFilter<"User"> | string | null
   sessions?: Prisma.SessionListRelationFilter
   accounts?: Prisma.AccountListRelationFilter
   projects?: Prisma.ProjectListRelationFilter
@@ -211,6 +293,12 @@ export type UserOrderByWithRelationInput = {
   image?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  plan?: Prisma.SortOrder
+  creditsUsed?: Prisma.SortOrder
+  creditsResetAt?: Prisma.SortOrder
+  polarCustomerId?: Prisma.SortOrderInput | Prisma.SortOrder
+  subscriptionId?: Prisma.SortOrderInput | Prisma.SortOrder
+  subscriptionStatus?: Prisma.SortOrderInput | Prisma.SortOrder
   sessions?: Prisma.SessionOrderByRelationAggregateInput
   accounts?: Prisma.AccountOrderByRelationAggregateInput
   projects?: Prisma.ProjectOrderByRelationAggregateInput
@@ -227,6 +315,12 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   image?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  plan?: Prisma.StringFilter<"User"> | string
+  creditsUsed?: Prisma.IntFilter<"User"> | number
+  creditsResetAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  polarCustomerId?: Prisma.StringNullableFilter<"User"> | string | null
+  subscriptionId?: Prisma.StringNullableFilter<"User"> | string | null
+  subscriptionStatus?: Prisma.StringNullableFilter<"User"> | string | null
   sessions?: Prisma.SessionListRelationFilter
   accounts?: Prisma.AccountListRelationFilter
   projects?: Prisma.ProjectListRelationFilter
@@ -240,9 +334,17 @@ export type UserOrderByWithAggregationInput = {
   image?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  plan?: Prisma.SortOrder
+  creditsUsed?: Prisma.SortOrder
+  creditsResetAt?: Prisma.SortOrder
+  polarCustomerId?: Prisma.SortOrderInput | Prisma.SortOrder
+  subscriptionId?: Prisma.SortOrderInput | Prisma.SortOrder
+  subscriptionStatus?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
+  _avg?: Prisma.UserAvgOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
+  _sum?: Prisma.UserSumOrderByAggregateInput
 }
 
 export type UserScalarWhereWithAggregatesInput = {
@@ -256,6 +358,12 @@ export type UserScalarWhereWithAggregatesInput = {
   image?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
+  plan?: Prisma.StringWithAggregatesFilter<"User"> | string
+  creditsUsed?: Prisma.IntWithAggregatesFilter<"User"> | number
+  creditsResetAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
+  polarCustomerId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  subscriptionId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  subscriptionStatus?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
 }
 
 export type UserCreateInput = {
@@ -266,6 +374,12 @@ export type UserCreateInput = {
   image?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  plan?: string
+  creditsUsed?: number
+  creditsResetAt?: Date | string
+  polarCustomerId?: string | null
+  subscriptionId?: string | null
+  subscriptionStatus?: string | null
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
@@ -279,6 +393,12 @@ export type UserUncheckedCreateInput = {
   image?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  plan?: string
+  creditsUsed?: number
+  creditsResetAt?: Date | string
+  polarCustomerId?: string | null
+  subscriptionId?: string | null
+  subscriptionStatus?: string | null
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
@@ -292,6 +412,12 @@ export type UserUpdateInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  plan?: Prisma.StringFieldUpdateOperationsInput | string
+  creditsUsed?: Prisma.IntFieldUpdateOperationsInput | number
+  creditsResetAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  polarCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subscriptionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
@@ -305,6 +431,12 @@ export type UserUncheckedUpdateInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  plan?: Prisma.StringFieldUpdateOperationsInput | string
+  creditsUsed?: Prisma.IntFieldUpdateOperationsInput | number
+  creditsResetAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  polarCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subscriptionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
@@ -318,6 +450,12 @@ export type UserCreateManyInput = {
   image?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  plan?: string
+  creditsUsed?: number
+  creditsResetAt?: Date | string
+  polarCustomerId?: string | null
+  subscriptionId?: string | null
+  subscriptionStatus?: string | null
 }
 
 export type UserUpdateManyMutationInput = {
@@ -328,6 +466,12 @@ export type UserUpdateManyMutationInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  plan?: Prisma.StringFieldUpdateOperationsInput | string
+  creditsUsed?: Prisma.IntFieldUpdateOperationsInput | number
+  creditsResetAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  polarCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subscriptionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UserUncheckedUpdateManyInput = {
@@ -338,6 +482,12 @@ export type UserUncheckedUpdateManyInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  plan?: Prisma.StringFieldUpdateOperationsInput | string
+  creditsUsed?: Prisma.IntFieldUpdateOperationsInput | number
+  creditsResetAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  polarCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subscriptionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UserCountOrderByAggregateInput = {
@@ -348,6 +498,16 @@ export type UserCountOrderByAggregateInput = {
   image?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  plan?: Prisma.SortOrder
+  creditsUsed?: Prisma.SortOrder
+  creditsResetAt?: Prisma.SortOrder
+  polarCustomerId?: Prisma.SortOrder
+  subscriptionId?: Prisma.SortOrder
+  subscriptionStatus?: Prisma.SortOrder
+}
+
+export type UserAvgOrderByAggregateInput = {
+  creditsUsed?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -358,6 +518,12 @@ export type UserMaxOrderByAggregateInput = {
   image?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  plan?: Prisma.SortOrder
+  creditsUsed?: Prisma.SortOrder
+  creditsResetAt?: Prisma.SortOrder
+  polarCustomerId?: Prisma.SortOrder
+  subscriptionId?: Prisma.SortOrder
+  subscriptionStatus?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
@@ -368,6 +534,16 @@ export type UserMinOrderByAggregateInput = {
   image?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  plan?: Prisma.SortOrder
+  creditsUsed?: Prisma.SortOrder
+  creditsResetAt?: Prisma.SortOrder
+  polarCustomerId?: Prisma.SortOrder
+  subscriptionId?: Prisma.SortOrder
+  subscriptionStatus?: Prisma.SortOrder
+}
+
+export type UserSumOrderByAggregateInput = {
+  creditsUsed?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
@@ -433,6 +609,12 @@ export type UserCreateWithoutSessionsInput = {
   image?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  plan?: string
+  creditsUsed?: number
+  creditsResetAt?: Date | string
+  polarCustomerId?: string | null
+  subscriptionId?: string | null
+  subscriptionStatus?: string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
 }
@@ -445,6 +627,12 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   image?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  plan?: string
+  creditsUsed?: number
+  creditsResetAt?: Date | string
+  polarCustomerId?: string | null
+  subscriptionId?: string | null
+  subscriptionStatus?: string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
 }
@@ -473,6 +661,12 @@ export type UserUpdateWithoutSessionsInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  plan?: Prisma.StringFieldUpdateOperationsInput | string
+  creditsUsed?: Prisma.IntFieldUpdateOperationsInput | number
+  creditsResetAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  polarCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subscriptionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
 }
@@ -485,6 +679,12 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  plan?: Prisma.StringFieldUpdateOperationsInput | string
+  creditsUsed?: Prisma.IntFieldUpdateOperationsInput | number
+  creditsResetAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  polarCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subscriptionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -497,6 +697,12 @@ export type UserCreateWithoutAccountsInput = {
   image?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  plan?: string
+  creditsUsed?: number
+  creditsResetAt?: Date | string
+  polarCustomerId?: string | null
+  subscriptionId?: string | null
+  subscriptionStatus?: string | null
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
 }
@@ -509,6 +715,12 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   image?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  plan?: string
+  creditsUsed?: number
+  creditsResetAt?: Date | string
+  polarCustomerId?: string | null
+  subscriptionId?: string | null
+  subscriptionStatus?: string | null
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
 }
@@ -537,6 +749,12 @@ export type UserUpdateWithoutAccountsInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  plan?: Prisma.StringFieldUpdateOperationsInput | string
+  creditsUsed?: Prisma.IntFieldUpdateOperationsInput | number
+  creditsResetAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  polarCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subscriptionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
 }
@@ -549,6 +767,12 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  plan?: Prisma.StringFieldUpdateOperationsInput | string
+  creditsUsed?: Prisma.IntFieldUpdateOperationsInput | number
+  creditsResetAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  polarCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subscriptionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -561,6 +785,12 @@ export type UserCreateWithoutProjectsInput = {
   image?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  plan?: string
+  creditsUsed?: number
+  creditsResetAt?: Date | string
+  polarCustomerId?: string | null
+  subscriptionId?: string | null
+  subscriptionStatus?: string | null
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
 }
@@ -573,6 +803,12 @@ export type UserUncheckedCreateWithoutProjectsInput = {
   image?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  plan?: string
+  creditsUsed?: number
+  creditsResetAt?: Date | string
+  polarCustomerId?: string | null
+  subscriptionId?: string | null
+  subscriptionStatus?: string | null
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
 }
@@ -601,6 +837,12 @@ export type UserUpdateWithoutProjectsInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  plan?: Prisma.StringFieldUpdateOperationsInput | string
+  creditsUsed?: Prisma.IntFieldUpdateOperationsInput | number
+  creditsResetAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  polarCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subscriptionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
 }
@@ -613,6 +855,12 @@ export type UserUncheckedUpdateWithoutProjectsInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  plan?: Prisma.StringFieldUpdateOperationsInput | string
+  creditsUsed?: Prisma.IntFieldUpdateOperationsInput | number
+  creditsResetAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  polarCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subscriptionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subscriptionStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -674,6 +922,12 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   image?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  plan?: boolean
+  creditsUsed?: boolean
+  creditsResetAt?: boolean
+  polarCustomerId?: boolean
+  subscriptionId?: boolean
+  subscriptionStatus?: boolean
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
   projects?: boolean | Prisma.User$projectsArgs<ExtArgs>
@@ -688,6 +942,12 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   image?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  plan?: boolean
+  creditsUsed?: boolean
+  creditsResetAt?: boolean
+  polarCustomerId?: boolean
+  subscriptionId?: boolean
+  subscriptionStatus?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -698,6 +958,12 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   image?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  plan?: boolean
+  creditsUsed?: boolean
+  creditsResetAt?: boolean
+  polarCustomerId?: boolean
+  subscriptionId?: boolean
+  subscriptionStatus?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
@@ -708,9 +974,15 @@ export type UserSelectScalar = {
   image?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  plan?: boolean
+  creditsUsed?: boolean
+  creditsResetAt?: boolean
+  polarCustomerId?: boolean
+  subscriptionId?: boolean
+  subscriptionStatus?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "image" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "image" | "createdAt" | "updatedAt" | "plan" | "creditsUsed" | "creditsResetAt" | "polarCustomerId" | "subscriptionId" | "subscriptionStatus", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
@@ -735,6 +1007,12 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     image: string | null
     createdAt: Date
     updatedAt: Date
+    plan: string
+    creditsUsed: number
+    creditsResetAt: Date
+    polarCustomerId: string | null
+    subscriptionId: string | null
+    subscriptionStatus: string | null
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -1168,6 +1446,12 @@ export interface UserFieldRefs {
   readonly image: Prisma.FieldRef<"User", 'String'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly plan: Prisma.FieldRef<"User", 'String'>
+  readonly creditsUsed: Prisma.FieldRef<"User", 'Int'>
+  readonly creditsResetAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly polarCustomerId: Prisma.FieldRef<"User", 'String'>
+  readonly subscriptionId: Prisma.FieldRef<"User", 'String'>
+  readonly subscriptionStatus: Prisma.FieldRef<"User", 'String'>
 }
     
 

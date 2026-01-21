@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as UpgradeRouteImport } from './routes/upgrade'
 import { Route as AuthRouteRouteImport } from './routes/_auth/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PlaygroundPlaygroundIdRouteImport } from './routes/playground/$playgroundId'
@@ -16,6 +17,11 @@ import { Route as ApiInngestRouteImport } from './routes/api/inngest'
 import { Route as AuthLoginRouteImport } from './routes/_auth/login'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
+const UpgradeRoute = UpgradeRouteImport.update({
+  id: '/upgrade',
+  path: '/upgrade',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRouteRoute = AuthRouteRouteImport.update({
   id: '/_auth',
   getParentRoute: () => rootRouteImport,
@@ -48,6 +54,7 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/upgrade': typeof UpgradeRoute
   '/login': typeof AuthLoginRoute
   '/api/inngest': typeof ApiInngestRoute
   '/playground/$playgroundId': typeof PlaygroundPlaygroundIdRoute
@@ -55,6 +62,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/upgrade': typeof UpgradeRoute
   '/login': typeof AuthLoginRoute
   '/api/inngest': typeof ApiInngestRoute
   '/playground/$playgroundId': typeof PlaygroundPlaygroundIdRoute
@@ -64,6 +72,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_auth': typeof AuthRouteRouteWithChildren
+  '/upgrade': typeof UpgradeRoute
   '/_auth/login': typeof AuthLoginRoute
   '/api/inngest': typeof ApiInngestRoute
   '/playground/$playgroundId': typeof PlaygroundPlaygroundIdRoute
@@ -73,6 +82,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/upgrade'
     | '/login'
     | '/api/inngest'
     | '/playground/$playgroundId'
@@ -80,6 +90,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/upgrade'
     | '/login'
     | '/api/inngest'
     | '/playground/$playgroundId'
@@ -88,6 +99,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_auth'
+    | '/upgrade'
     | '/_auth/login'
     | '/api/inngest'
     | '/playground/$playgroundId'
@@ -97,6 +109,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRouteRoute: typeof AuthRouteRouteWithChildren
+  UpgradeRoute: typeof UpgradeRoute
   ApiInngestRoute: typeof ApiInngestRoute
   PlaygroundPlaygroundIdRoute: typeof PlaygroundPlaygroundIdRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
@@ -104,6 +117,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/upgrade': {
+      id: '/upgrade'
+      path: '/upgrade'
+      fullPath: '/upgrade'
+      preLoaderRoute: typeof UpgradeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_auth': {
       id: '/_auth'
       path: ''
@@ -164,6 +184,7 @@ const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRouteRoute: AuthRouteRouteWithChildren,
+  UpgradeRoute: UpgradeRoute,
   ApiInngestRoute: ApiInngestRoute,
   PlaygroundPlaygroundIdRoute: PlaygroundPlaygroundIdRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,

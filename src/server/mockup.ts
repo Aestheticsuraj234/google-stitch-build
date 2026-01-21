@@ -2,6 +2,7 @@ import { prisma } from '@/db'
 import { inngest } from '@/inngest'
 import { authFnMiddleware } from '@/middleware/auth'
 import { createServerFn } from '@tanstack/react-start'
+import { canUserGenerate, incrementCreditsUsed } from './credits'
 
 export type DeviceType = 'DESKTOP' | 'MOBILE' | 'TABLET' | 'BOTH'
 export type UILibrary = 'SHADCN' | 'MATERIAL_UI' | 'ANT_DESIGN' | 'ACETERNITY'
@@ -59,6 +60,15 @@ export const createMockup = createServerFn({ method: 'POST' })
         }
       }
 
+      const {canGenerate , reason} = await canUserGenerate()
+
+      if(!canGenerate){
+        return {
+          success: false,
+          error: reason || "You've reached your generation limit. Please upgrade to Pro for unlimited generations.",
+        };
+      }
+
       const { aiModel, deviceType, prompt, uiLibrary, projectName } = data
 
       const project = await prisma.project.create({
@@ -95,6 +105,8 @@ export const createMockup = createServerFn({ method: 'POST' })
           aiModel,
         },
       })
+
+      await incrementCreditsUsed()
 
       return {
         success: true,
@@ -221,6 +233,14 @@ export const editVariation = createServerFn({method:"POST"})
         }
       }
 
+        const { canGenerate, reason } = await canUserGenerate();
+      if (!canGenerate) {
+        return {
+          success: false,
+          error: reason || "You've reached your generation limit. Please upgrade to Pro for unlimited generations.",
+        };
+      }
+
       const {aiModel , editPrompt ,  mockupId , versionId} = data;
 
       const mockup = await prisma.mockup.findFirst({
@@ -262,6 +282,8 @@ export const editVariation = createServerFn({method:"POST"})
           aiModel,
         }
       })
+
+      await incrementCreditsUsed()
 
       return {
         success:true
