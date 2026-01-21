@@ -14,6 +14,7 @@ import { Link, useNavigate } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
 import { LogOut, User, Crown, Zap, Sparkles } from 'lucide-react'
 import { useState } from 'react'
+import { getUserCredits } from '@/server/credits'
 
 
 interface UserMenuProps {
@@ -51,7 +52,12 @@ const UserMenu = ({ session }: UserMenuProps) => {
     .toUpperCase()
     .slice(0, 2)
 
-  const isPro = false
+    const {data:credits} = useQuery({
+      queryKey:["user-credits"],
+      queryFn:()=>getUserCredits()
+    })
+
+  const isPro = credits?.plan === "pro"
 
   const handleLogout = async()=>{
     setIsPending(true)
